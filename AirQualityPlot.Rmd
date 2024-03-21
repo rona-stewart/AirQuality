@@ -1,0 +1,38 @@
+---
+title: "Air Quality"
+author: "Rona Stewart"
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(ggplot2); library(plotly)
+data <- airquality
+```
+
+## Introduction
+
+- This is a brief presentation considering whether there appears to be a relationship between temperature and ozone levels across different months.  
+  
+- The data are taken from the datasets library in R, as at `r Sys.Date()`.  
+
+```{r data, echo = TRUE, eval = FALSE}
+library(ggplot2); library(plotly); library(datasets)
+data <- airquality
+```
+
+## Slide with Plot
+
+```{r plot, echo = FALSE, results = "asis"}
+airquality$Month <- as.factor(airquality$Month)
+g <- ggplot(data = airquality, aes(Ozone, Temp))
+g <- g + 
+        geom_point(aes(col = Month)) + 
+        geom_smooth(aes(col = Month), se = FALSE) +
+        theme_bw() +
+        ggtitle("Ozone Levels compared to Temperature by Month") +
+        labs(legend = "Month") 
+
+ggplotly(g)
+```
